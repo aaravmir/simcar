@@ -1,0 +1,81 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class Bear here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Bear extends SuperSmoothMover
+{
+    private double speed;
+    private double maxSpeed;
+    private int direction;
+    private boolean awake;
+    private int actsUntilPass;
+    private int totalActs, actCounter;
+    
+    public Bear (int direction, int totalActs) {
+        // choose a random speed
+        maxSpeed = Math.random() * 1.5 + 1;
+        speed = maxSpeed;
+        // start as awake 
+        awake = true;
+        this.direction = direction;
+        this.totalActs = totalActs;
+        actCounter = totalActs;
+    }
+    
+    /**
+     * Act - do whatever the Pedestrian wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act()
+    {
+        if (awake){
+            maul();            
+        }
+        //say how if its put in the "if awake" the bear doesnt actually kill them
+        if (getOneObjectAtOffset(0, (int)(direction * getImage().getHeight()/2 + (int)(direction * speed)), Pedestrian.class) == null){
+            setLocation (getX(), getY() + (int)(speed*direction));
+        }
+        if (direction == -1 && getY() < 100){
+            getWorld().removeObject(this);
+        } else if (direction == 1 && getY() > 550){
+            getWorld().removeObject(this);
+        }
+        passAway();
+    }
+
+    public boolean maul () {
+        Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
+        if (p != null){
+            p.knockDown();
+            return true;  
+        }
+        return false;
+    }
+
+    public boolean isAwake () {
+        return awake;
+    }
+
+    public void sedated () {
+        speed = 0;
+        setRotation (90);
+        awake = false;
+    }
+    
+    public void passAway () {
+        if(awake != true){
+            if(actCounter > 0) {
+            actCounter--;
+            if (actCounter < 110) {
+                getImage().setTransparency (actCounter * 2);
+            } else {
+                getWorld().removeObject(this);
+            }
+        }
+    }
+    }   
+}
