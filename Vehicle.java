@@ -64,7 +64,7 @@ public abstract class Vehicle extends SuperSmoothMover
         } else {
             speed = ahead.getSpeed();
         }
-        speed = isRaining ? speed/4 : speed;
+        speed = isRaining ? speed/3 : speed;
         move(speed * direction);
     }   
 
@@ -76,9 +76,10 @@ public abstract class Vehicle extends SuperSmoothMover
         return speed;
     }
     
-    public void slowMeDown(int n) {
+    public void slip(int n) {
         isRaining = true;
     }
+    
     public void returnToNormalSpeed() {
         isRaining = false;
     }

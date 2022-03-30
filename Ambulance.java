@@ -68,4 +68,30 @@ public class Ambulance extends Vehicle
         }
         return false;
     }
+    
+    public boolean takeToMorgue () {
+        int halfMyWidth = getImage().getWidth()/2;
+        int halfMyHeight = getImage().getHeight()/2;
+        // right edge, mid point
+        Crook c = (Crook)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), 0, Crook.class);
+        // top right corner
+        Crook c2 = (Crook)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), -halfMyHeight, Crook.class);
+        // top left corner
+        Crook c3 = (Crook)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), halfMyHeight, Crook.class);
+
+        if (c.isAwake() == false){
+            c.pickUp();
+            speed = maxSpeed;
+            return true;
+        } else if (c2.isAwake() == false){
+            c2.pickUp();
+            speed = maxSpeed;
+            return true;
+        } else if (c3.isAwake() == false){
+            c3.pickUp();
+            speed = maxSpeed;
+            return true;
+        }
+        return false;
+    }
 }

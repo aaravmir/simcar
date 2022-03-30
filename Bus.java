@@ -22,43 +22,37 @@ public class Bus extends Vehicle
     public void act()
     {
         drive();
-        pickUpPedestrian();
+        pickUpPolitician();
         if (checkEdge()){
             getWorld().removeObject(this);
         }
         
     }
     
-    public void stop()
-    {
-        
-    }
 
     public boolean checkHitPedestrian () {
         return false;
     }
     
-    public boolean pickUpPedestrian () {
+    public boolean pickUpPolitician () {
         int halfMyWidth = getImage().getWidth()/2;
         int halfMyHeight = getImage().getHeight()/2;
         // right edge, mid point
-        Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), 0, Pedestrian.class);
+        Politician p = (Politician)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), 0, Politician.class);
         // top right corner
-        Pedestrian p2 = (Pedestrian)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), -halfMyHeight, Pedestrian.class);
+        Politician p2 = (Politician)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), -halfMyHeight, Politician.class);
         // top left corner
-        Pedestrian p3 = (Pedestrian)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), halfMyHeight, Pedestrian.class);
+        Politician p3 = (Politician)getOneObjectAtOffset((int)((speed + halfMyWidth)*direction), halfMyHeight, Politician.class);
 
         if (p != null && p.isAwake()){
-            stop();
             p.pickUp();
             speed = maxSpeed;
             return true;
         } else if (p2 != null && p2.isAwake()){
-            stop();
             p2.pickUp();
+            speed = maxSpeed;
             return true;
         } else if (p3 != null && p3.isAwake()){
-            stop();
             p3.pickUp();
             speed = maxSpeed;
             return true;

@@ -14,20 +14,20 @@ public class Rainstorm extends Effect
     public Rainstorm () {
         super (300);
         maxShift = 50;
-        System.out.println("Rainstorm added");
+        //System.out.println("Rainstorm added");
     }
     
     public void addedToWorld () {
-        System.out.println("World class is " + getWorld().getClass().getName());
+        //System.out.println("World class is " + getWorld().getClass().getName());
         image = drawRainStorm(getWorld().getWidth() + 100, getWorld().getHeight() + 100, 100);
         setImage(image);
         ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) getWorld().getObjects(Vehicle.class);
         for (Vehicle v : vehicles) {
-            System.out.println("I am slowing down: " + v.getClass().getName());
-            v.slowMeDown(240);
+            //System.out.println("I am slowing down: " + v.getClass().getName());
+            v.slip(300);
         }
         rainstormAddedToMyWorld = true;
-/*        midX = getX();
+        /*        midX = getX();
         midY = getY();*/
     }
     
@@ -43,9 +43,9 @@ public class Rainstorm extends Effect
     public static GreenfootImage drawRainStorm (int width, int height, int severity){
 
         Color[] c = new Color [32];
-        int red = 128;
+        int red = 140;
         for (int i = 0; i < c.length; i++){
-            c[i] = new Color (red, 200, 205);
+            c[i] = new Color (red, 150, 150);
             red+=2;
         }
 
@@ -63,7 +63,7 @@ public class Rainstorm extends Effect
                 // random locations for our dot
                 int randX = Greenfoot.getRandomNumber (width);
                 int randY = Greenfoot.getRandomNumber (height);
-                temp.drawLine (randX, randY, randX, randY); // silly way to draw a dot..
+                temp.drawLine (randX, randY, randX, randY - 10); // silly way to draw a dot..
             }
         }
         for (int i = 0; i < severity; i++){

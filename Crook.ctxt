@@ -6,7 +6,10 @@ comment1.target=Crook(int)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
-comment3.target=boolean\ shootPolitician()
+comment3.target=void\ shootingSound()
+comment3.text=\ public\ boolean\ shootPolitician\ ()\ {\r\n\ \ \ \ \ \ \ \ Politician\ p\ \=\ (Politician)getOneObjectAtOffset((int)speed\ +\ getImage().getWidth()/2,\ 0,\ Politician.class);\r\n\ \ \ \ \ \ \ \ if\ (p\ \!\=\ null){\r\n\ \ \ \ \ \ \ \ \ \ \ \ p.knockDown();\r\n\ \ \ \ \ \ \ \ \ \ \ \ shootingSound();\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\ \ \r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ false;\r\n}
 comment4.params=
-comment4.target=void\ shootingSound()
-numComments=5
+comment4.target=void\ targetPolitician()
+comment5.params=
+comment5.target=void\ shootPolitician()
+numComments=6

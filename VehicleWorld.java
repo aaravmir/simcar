@@ -99,7 +99,7 @@ public class VehicleWorld extends World
             }
         }
         
-        if(Greenfoot.getRandomNumber(500) == 0){
+        if(Greenfoot.getRandomNumber(1000) == 0){
             addObject(new Rainstorm(), 400, 300);
         }
         

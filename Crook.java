@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Crook extends Pedestrian
 {
     GreenfootSound gunShot;
+    private Politician targetPolitician;
     
     public Crook(int direction) {
         super(direction);
@@ -16,13 +17,13 @@ public class Crook extends Pedestrian
         gunShot.setVolume(0);
         gunShot.play();
         gunShot.stop();
-        maxSpeed = Math.random() * 2 + 3;
+        maxSpeed = Math.random() * 2 - 2;
     }
     
     public void act()
     {
         if(awake){
-            shootPolitician();
+            targetPolitician();
         }
         if (getOneObjectAtOffset(0, (int)(direction * getImage().getHeight()/2 + (int)(direction * speed)), Vehicle.class) == null){
             setLocation (getX(), getY() + (int)(speed*direction));
@@ -34,7 +35,7 @@ public class Crook extends Pedestrian
         }
     }
     
-    public boolean shootPolitician () {
+   /* public boolean shootPolitician () {
         Politician p = (Politician)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Politician.class);
         if (p != null){
             p.knockDown();
@@ -42,19 +43,26 @@ public class Crook extends Pedestrian
             return true;  
         }
         return false;
-    }
+    }*/
     
     public void shootingSound() {
         gunShot.setVolume(35);
         gunShot.play();
     }
-    /**
+    
     public void targetPolitician() {
         double closestTargetDistance = 0;
         double distanceToPolitician;
-        int numPoliticians;
         
-        if (politicians.size() > 0)
+        ArrayList<Politician> politicians = (ArrayList<Politician>)getObjectsInRange(100, Politician.class);
+        ArrayList<Politician> removeList = new ArrayList<Politician>();
+        for(Politician p : politicians) {
+            if(!p.isAwake()){
+                removeList.add(p);
+            }
+        }
+        politicians.removeAll (removeList);
+        if (!politicians.isEmpty())
         {
             // set the first one as my target
             targetPolitician = politicians.get(0);
@@ -78,21 +86,25 @@ public class Crook extends Pedestrian
                 }
             }
         }
+        if (targetPolitician != null && getWorld() != null)
+            shootPolitician();
     }
     
     public void shootPolitician ()
     {
+        if (targetPolitician.getWorld() == null){
+            targetPolitician = null;
+            return;
+        }
         turnTowards(targetPolitician.getX(), targetPolitician.getY());
-
+        move(speed);
         
-        if (this.getNeighbours (30, true, Politician.class).size() > 0)
-        {
-            Politician p = (Politician)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Politician.class);
+        Politician p = (Politician)getOneIntersectingObject(Politician.class);
+        if(p != null){
             p.knockDown();
+            shootingSound();
+
         }
-        else
-        {
-            move (speed);
         }
-    }*/
-}
+    }
+

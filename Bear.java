@@ -9,7 +9,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Bear extends SuperSmoothMover
 {
     GreenfootSound growl;
-    
     private double speed;
     private double maxSpeed;
     private int direction;
