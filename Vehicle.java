@@ -76,6 +76,6 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     public void slowMeDown(int n) {
-        
+        speed /= 2;
     }
 }

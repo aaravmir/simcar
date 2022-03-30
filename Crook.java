@@ -8,33 +8,47 @@ import java.util.ArrayList;
  */
 public class Crook extends Pedestrian
 {
-    /**
-     * Act - do whatever the Crook wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    
-    private Politician targetPolitician;
-    private ArrayList<Politician> politicians;
+    GreenfootSound gunShot;
     
     public Crook(int direction) {
         super(direction);
+        gunShot = new GreenfootSound("gunshot.mp3");
+        gunShot.setVolume(0);
+        gunShot.play();
+        gunShot.stop();
+        maxSpeed = Math.random() * 2 + 3;
     }
     
     public void act()
     {
-        // If there is a v
-        if (awake){
-            if (getOneObjectAtOffset(0, (int)(direction * getImage().getHeight()/2 + (int)(direction * speed)), Vehicle.class) == null){
-                setLocation (getX(), getY() + (int)(speed*direction));
-            }
-            if (direction == -1 && getY() < 100){
-                getWorld().removeObject(this);
-            } else if (direction == 1 && getY() > 550){
-                getWorld().removeObject(this);
-            }
+        if(awake){
+            shootPolitician();
+        }
+        if (getOneObjectAtOffset(0, (int)(direction * getImage().getHeight()/2 + (int)(direction * speed)), Vehicle.class) == null){
+            setLocation (getX(), getY() + (int)(speed*direction));
+        }
+        if (direction == -1 && getY() < 100){
+            getWorld().removeObject(this);
+        } else if (direction == 1 && getY() > 550){
+            getWorld().removeObject(this);
         }
     }
     
+    public boolean shootPolitician () {
+        Politician p = (Politician)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Politician.class);
+        if (p != null){
+            p.knockDown();
+            shootingSound();
+            return true;  
+        }
+        return false;
+    }
+    
+    public void shootingSound() {
+        gunShot.setVolume(35);
+        gunShot.play();
+    }
+    /**
     public void targetPolitician() {
         double closestTargetDistance = 0;
         double distanceToPolitician;
@@ -66,23 +80,19 @@ public class Crook extends Pedestrian
         }
     }
     
-    public void killPolitician ()
+    public void shootPolitician ()
     {
         turnTowards(targetPolitician.getX(), targetPolitician.getY());
 
         
         if (this.getNeighbours (30, true, Politician.class).size() > 0)
         {
-            // If I was able to eat, increase by life by flower's nibble power
-            int tryToKill = targetPolitician.kill();
-            if (tryToKill > 0 && hp < maxHP)
-            {
-                hp += tryToEat;
-            }
+            Politician p = (Politician)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Politician.class);
+            p.knockDown();
         }
         else
         {
-            move (mySpeed);
+            move (speed);
         }
-    }
+    }*/
 }

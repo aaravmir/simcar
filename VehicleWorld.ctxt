@@ -10,4 +10,6 @@ comment3.params=
 comment3.target=void\ spawn()
 comment4.params=world\ target\ spawners\ startY\ heightPerLane\ lanes\ spacing\ twoWay\ centreSplit
 comment4.target=int[]\ prepareLanes(greenfoot.World,\ greenfoot.GreenfootImage,\ VehicleSpawner[],\ int,\ int,\ int,\ int,\ boolean,\ boolean)
-numComments=5
+comment5.params=a\ b
+comment5.target=float\ getDistance(greenfoot.Actor,\ greenfoot.Actor)
+numComments=6

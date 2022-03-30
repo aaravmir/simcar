@@ -9,34 +9,43 @@ import java.util.ArrayList;
 public class Rainstorm extends Effect
 {
     private int maxShift, xShift, yShift, midX, midY;
+    private boolean rainstormAddedToMyWorld = false;
     
     public Rainstorm () {
-        super (240);
+        super (300);
         maxShift = 50;
+        System.out.println("Rainstorm added");
     }
     
-    public void addedToWorld (World w) {
-        image = drawRainStorm(w.getWidth() + 100, w. getHeight() + 100, 100);
+    public void addedToWorld () {
+        System.out.println("World class is " + getWorld().getClass().getName());
+        image = drawRainStorm(getWorld().getWidth() + 100, getWorld().getHeight() + 100, 100);
         setImage(image);
-        ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) w.getObjects(Vehicle.class);
+        ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) getWorld().getObjects(Vehicle.class);
         for (Vehicle v : vehicles) {
+            System.out.println("I am slowing down: " + v.getClass().getName());
             v.slowMeDown(240);
         }
-        midX = getX();
-        midY = getY();
+        rainstormAddedToMyWorld = true;
+/*        midX = getX();
+        midY = getY();*/
     }
     
     public void act()
     {
-        super.act();
+        super.act();   
+        if (!rainstormAddedToMyWorld) {
+            addedToWorld();
+        }
+                
     }
     
     public static GreenfootImage drawRainStorm (int width, int height, int severity){
 
-        Color[] swatch = new Color [32];
+        Color[] c = new Color [32];
         int red = 128;
-        for (int i = 0; i < swatch.length; i++){
-            swatch[i] = new Color (red, 240, 255);
+        for (int i = 0; i < c.length; i++){
+            c[i] = new Color (red, 200, 205);
             red+=2;
         }
 
@@ -47,9 +56,9 @@ public class Rainstorm extends Effect
 
                 // Choose a random colour from my swatch, and set its tranparency randomly
                 int randColor = Greenfoot.getRandomNumber(32);
-                int randTrans = Greenfoot.getRandomNumber(50) + 205; // almost opaque for dots
+                int randTrans = Greenfoot.getRandomNumber(50) + 105; // almost opaque for dots
                 //temp.setColor (swatch[randColor]);
-                temp.setColor(Color.WHITE);
+                temp.setColor(Color.BLUE);
                 temp.setTransparency(randTrans);
                 // random locations for our dot
                 int randX = Greenfoot.getRandomNumber (width);
@@ -60,10 +69,10 @@ public class Rainstorm extends Effect
         for (int i = 0; i < severity; i++){
             for (int j = 0; j < 100; j++){ // draw 100 circles
 
-                // Choose a random colour from my swatch, and set its tranparency randomly
-                int randColor = Greenfoot.getRandomNumber(32);
-                int randTrans = Greenfoot.getRandomNumber(50) + 90; // around half transparent
-                temp.setColor (swatch[randColor]);
+                // Choose a random colour from my c, and set its tranparency randomly
+                int randColor = Greenfoot.getRandomNumber(30);
+                int randTrans = Greenfoot.getRandomNumber(50) + 70; // around half transparent
+                temp.setColor (c[randColor]);
                 temp.setTransparency(randTrans);
                 // random locations for our dot
                 int randX = Greenfoot.getRandomNumber (width);

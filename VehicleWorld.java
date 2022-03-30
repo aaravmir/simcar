@@ -77,8 +77,8 @@ public class VehicleWorld extends World
             }
         }
 
-        // Chance to spawn a Pedestrian
-        if (Greenfoot.getRandomNumber (60) == 0){
+        // Chance to spawn a Politician
+        if (Greenfoot.getRandomNumber (100) == 0){
             int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
             boolean spawnAtTop = Greenfoot.getRandomNumber(2) == 0 ? true : false;
             if (spawnAtTop){
@@ -88,18 +88,29 @@ public class VehicleWorld extends World
             }
         }
         
-        if(Greenfoot.getRandomNumber(50) == 0){
+        // Chance to spawn a Crook
+        if (Greenfoot.getRandomNumber (200) == 0){
+            int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
+            boolean spawnAtTop = Greenfoot.getRandomNumber(2) == 0 ? true : false;
+            if (spawnAtTop){
+                addObject (new Crook (1), xSpawnLocation, 50);
+            } else {
+                addObject (new Crook (-1), xSpawnLocation, 550);
+            }
+        }
+        
+        if(Greenfoot.getRandomNumber(500) == 0){
             addObject(new Rainstorm(), 400, 300);
         }
         
         // Chance to spawn a Bear
-        if (Greenfoot.getRandomNumber (300) == 0){
+        if (Greenfoot.getRandomNumber (600) == 0){
             int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
             boolean spawnAtTop = Greenfoot.getRandomNumber(2) == 0 ? true : false;
             if (spawnAtTop){
-                addObject (new Bear (1, 240), xSpawnLocation, 50);
+                addObject (new Bear (1), xSpawnLocation, 50);
             } else {
-                addObject (new Bear (-1, 240), xSpawnLocation, 550);
+                addObject (new Bear (-1), xSpawnLocation, 550);
             }
         }
     }

@@ -6,7 +6,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Car extends Vehicle
 {
     GreenfootSound carHorn;
-    GreenfootSound longerHorn;
     
     public Car(VehicleSpawner origin) {
         super(origin); // call the superclass' constructor

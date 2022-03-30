@@ -8,22 +8,28 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Bear extends SuperSmoothMover
 {
+    GreenfootSound growl;
+    
     private double speed;
     private double maxSpeed;
     private int direction;
     private boolean awake;
     private int actsUntilPass;
-    private int totalActs, actCounter;
-    
-    public Bear (int direction, int totalActs) {
+    private int passCount;
+    private int passCounter;
+
+    public Bear (int direction) {
         // choose a random speed
         maxSpeed = Math.random() * 1.5 + 1;
         speed = maxSpeed;
         // start as awake 
         awake = true;
         this.direction = direction;
-        this.totalActs = totalActs;
-        actCounter = totalActs;
+        actsUntilPass = 300;
+        growl = new GreenfootSound("beargrowl.mp3");
+        growl.setVolume(0);
+        growl.play();
+        growl.stop();
     }
     
     /**
@@ -44,16 +50,26 @@ public class Bear extends SuperSmoothMover
         } else if (direction == 1 && getY() > 550){
             getWorld().removeObject(this);
         }
-        passAway();
+        if(isAwake() != true || speed == 0)
+        {
+            passAway();
+        }
     }
 
     public boolean maul () {
         Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
         if (p != null){
             p.knockDown();
+            bearRoar();
             return true;  
         }
         return false;
+    }
+    
+    public void bearRoar() {
+        growl.setVolume(50);
+        growl.play();
+        growl.stop();
     }
 
     public boolean isAwake () {
@@ -67,15 +83,16 @@ public class Bear extends SuperSmoothMover
     }
     
     public void passAway () {
-        if(awake != true){
-            if(actCounter > 0) {
-            actCounter--;
-            if (actCounter < 110) {
-                getImage().setTransparency (actCounter * 2);
-            } else {
+        if (actsUntilPass > 0)
+        {
+            actsUntilPass--;
+        }
+        else
+        {
+            if (passCount == 0)
+            {
                 getWorld().removeObject(this);
             }
         }
-    }
     }   
 }

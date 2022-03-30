@@ -15,14 +15,24 @@ public class Effect extends Actor
         this.totalActs = totalActs;
         actCounter = totalActs;
     }
+    
+    
 
     public void act () 
     {
         if(actCounter > 0) {
+            if (this instanceof Rainstorm) {
+                //System.out.print(actCounter + ", ");
+            }
             actCounter--;
             if (actCounter < 60) {
                 image.setTransparency (actCounter * 2);
-            } else {
+            } 
+            if (actCounter == 0)
+            {
+                if (this instanceof Rainstorm) {
+                    System.out.println("Removing Rainstorm when actCounter = " + actCounter);
+                }
                 getWorld().removeObject(this);
             }
         }
