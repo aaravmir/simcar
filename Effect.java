@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.ArrayList;
 /**
  * Write a description of class Effect here.
  * 
@@ -32,6 +32,10 @@ public class Effect extends Actor
             {
                 if (this instanceof Rainstorm) {
                     System.out.println("Removing Rainstorm when actCounter = " + actCounter);
+                    ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) getWorld().getObjects(Vehicle.class);
+                    for (Vehicle v : vehicles) {
+                        v.returnToNormalSpeed();
+                    }                    
                 }
                 getWorld().removeObject(this);
             }

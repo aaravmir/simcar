@@ -12,6 +12,7 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean moving;
     protected int yOffset;
     protected VehicleSpawner origin;
+    protected boolean isRaining = false;
     
     protected abstract boolean checkHitPedestrian ();
 
@@ -60,11 +61,11 @@ public abstract class Vehicle extends SuperSmoothMover
         if (ahead == null)
         {
             speed = maxSpeed;
-
         } else {
             speed = ahead.getSpeed();
         }
-        move (speed * direction);
+        speed = isRaining ? speed/4 : speed;
+        move(speed * direction);
     }   
 
     /**
@@ -76,6 +77,9 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     public void slowMeDown(int n) {
-        speed /= 2;
+        isRaining = true;
+    }
+    public void returnToNormalSpeed() {
+        isRaining = false;
     }
 }
