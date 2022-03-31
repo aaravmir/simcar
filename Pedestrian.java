@@ -17,7 +17,8 @@ public abstract class Pedestrian extends SuperSmoothMover
         awake = true;
         this.direction = direction;
     }
-
+    
+    
     /**
      * Act - do whatever the Pedestrian wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -43,6 +44,7 @@ public abstract class Pedestrian extends SuperSmoothMover
     public void knockDown () {
         speed = 0;
         setRotation (90);
+        getWorld().addObject(new Blood(), getX(), getY());
         awake = false;
     }
 

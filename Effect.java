@@ -31,7 +31,7 @@ public class Effect extends Actor
             if (actCounter == 0)
             {
                 if (this instanceof Rainstorm) {
-                    System.out.println("Removing Rainstorm when actCounter = " + actCounter);
+                    //System.out.println("Removing Rainstorm when actCounter = " + actCounter);
                     ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) getWorld().getObjects(Vehicle.class);
                     for (Vehicle v : vehicles) {
                         v.returnToNormalSpeed();

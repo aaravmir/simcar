@@ -35,7 +35,7 @@ public class VehicleWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1, false); 
 
-        setPaintOrder (Pedestrian.class, Bear.class, Bus.class, Car.class, Ambulance.class, Cop.class);
+        setPaintOrder (Blood.class, Pedestrian.class, Bear.class, Bus.class, Car.class, Ambulance.class, Cop.class);
 
         // set up background
         background = new GreenfootImage ("background01.png");

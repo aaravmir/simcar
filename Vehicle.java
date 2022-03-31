@@ -13,22 +13,70 @@ public abstract class Vehicle extends SuperSmoothMover
     protected int yOffset;
     protected VehicleSpawner origin;
     protected boolean isRaining = false;
-    
+    protected boolean isFastEnough;
+    public static String INNER_LANE = "INNER";
+    public static String MIDDLE_LANE = "MIDDLE";
+    public static String OUTER_LANE = "OUTER";
+
     protected abstract boolean checkHitPedestrian ();
 
     public Vehicle (VehicleSpawner origin) {
         this.origin = origin;
         moving = true;
-        
+
         if (origin.facesRightward()){
             direction = 1;
-            
         } else {
             direction = -1;
             getImage().mirrorHorizontally();
         }
+        
+/*        String myLane = getLane();
+        if (myLane == OUTER_LANE) {
+            // process OUTER_LANE
+        } else if (myLane == INNER_LANE) {
+            // process INNER_LANE
+        } else {
+            // proess MIDDLE_LANE
+        }*/
     }
-    
+
+    public boolean canMoveRight() {
+        Vehicle toRightGoingRight = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 + 10), Vehicle.class);
+        if (toRightGoingRight != null) {
+            Vehicle toRightGoingLeft = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 - 10), Vehicle.class);
+            return toRightGoingLeft == null;                    
+        } else {
+            return true;
+        }
+    }
+
+    public boolean canMoveLeft() {
+        Vehicle toLeftGoingRight = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 - 10), Vehicle.class);
+        if(toLeftGoingRight != null){
+            Vehicle toLeftGoingLeft = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 + 10), Vehicle.class);
+            return toLeftGoingLeft == null;
+        } else {
+            return true;
+        }
+    }
+
+    public String getLane() {        
+        if((getY() > 249 && getY() < 253) || (getY() > 522 && getY() < 526)) {
+            return OUTER_LANE;            
+        } else if((getY() > 304 && getY() < 308) || (getY() > 466 && getY() < 471)) {
+            return MIDDLE_LANE;
+        } else {
+            return INNER_LANE;
+        }
+    }
+
+    public boolean checkIfFastEnough()
+    {
+        Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 4), 0, Vehicle.class);
+        return speed >= ahead.getSpeed();
+    }
+
     public void addedToWorld (World w){
         setLocation (origin.getX() - (direction * 100), origin.getY() - yOffset);
     }
@@ -38,15 +86,10 @@ public abstract class Vehicle extends SuperSmoothMover
      */
     protected boolean checkEdge() {
         if (direction == 1){
-            if (getX() > getWorld().getWidth() + 200){
-                return true;
-            }
+            return getX() > getWorld().getWidth() + 200;
         } else {
-            if (getX() < -200){
-                return true;
-            }
+            return getX() < -200;
         }
-        return false;
     }
 
     /**
@@ -75,11 +118,11 @@ public abstract class Vehicle extends SuperSmoothMover
     public double getSpeed() {
         return speed;
     }
-    
+
     public void slip(int n) {
         isRaining = true;
     }
-    
+
     public void returnToNormalSpeed() {
         isRaining = false;
     }
