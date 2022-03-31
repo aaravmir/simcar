@@ -9,6 +9,10 @@ public abstract class Pedestrian extends SuperSmoothMover
     protected double maxSpeed;
     protected int direction;
     protected boolean awake;
+    protected int actsUntilPass;
+    protected int passCount;
+    protected int passCounter;
+    
     public Pedestrian(int direction) {
         // choose a random speed
         maxSpeed = Math.random() * 2 + 1;
@@ -16,6 +20,7 @@ public abstract class Pedestrian extends SuperSmoothMover
         // start as awake 
         awake = true;
         this.direction = direction;
+        actsUntilPass = 300;
     }
     
     
@@ -35,6 +40,11 @@ public abstract class Pedestrian extends SuperSmoothMover
             } else if (direction == 1 && getY() > 550){
                 getWorld().removeObject(this);
             }
+        } 
+          
+        if(isAwake() != true && getY() > 50 && getY() < 200)
+        {
+            passAway();
         }
     }
 
@@ -65,5 +75,17 @@ public abstract class Pedestrian extends SuperSmoothMover
         return awake;
     }
     
-     
+    protected void passAway () {
+        if (actsUntilPass > 0)
+        {
+            actsUntilPass--;
+        }
+        else
+        {
+            if (passCount == 0)
+            {
+                getWorld().removeObject(this);
+            }
+        }
+    } 
 }

@@ -30,18 +30,9 @@ public abstract class Vehicle extends SuperSmoothMover
             direction = -1;
             getImage().mirrorHorizontally();
         }
-        
-/*        String myLane = getLane();
-        if (myLane == OUTER_LANE) {
-            // process OUTER_LANE
-        } else if (myLane == INNER_LANE) {
-            // process INNER_LANE
-        } else {
-            // proess MIDDLE_LANE
-        }*/
     }
 
-    public boolean canMoveRight() {
+    protected boolean canMoveRight() {
         Vehicle toRightGoingRight = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 + 10), Vehicle.class);
         if (toRightGoingRight != null) {
             Vehicle toRightGoingLeft = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 - 10), Vehicle.class);
@@ -51,7 +42,7 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
 
-    public boolean canMoveLeft() {
+    protected boolean canMoveLeft() {
         Vehicle toLeftGoingRight = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 - 10), Vehicle.class);
         if(toLeftGoingRight != null){
             Vehicle toLeftGoingLeft = (Vehicle) getOneObjectAtOffset(0, direction * (int)(speed + getImage().getWidth()/2 + 10), Vehicle.class);
@@ -61,7 +52,7 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
 
-    public String getLane() {        
+    protected String getLane() {        
         if((getY() > 249 && getY() < 253) || (getY() > 522 && getY() < 526)) {
             return OUTER_LANE;            
         } else if((getY() > 304 && getY() < 308) || (getY() > 466 && getY() < 471)) {
@@ -71,7 +62,7 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
 
-    public boolean checkIfFastEnough()
+    protected boolean checkIfFastEnough()
     {
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 4), 0, Vehicle.class);
         return speed >= ahead.getSpeed();
